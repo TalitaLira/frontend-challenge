@@ -1,10 +1,11 @@
 import React from "react";
+import { FormWrapper, FormTitle } from "../../components/styles";
 
 export const ConfirmationPage = () => {
 
   return (
-    <>
-      <h1>This is the Confirmation page</h1>
-    </>
+    <FormWrapper>
+      <FormTitle>Confirmation</FormTitle>
+    </FormWrapper>
   )
 }

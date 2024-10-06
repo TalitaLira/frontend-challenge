@@ -1,10 +1,13 @@
 import React from "react";
+import { SignUpForm } from "../../components/sign-up-form";
+import { FormWrapper, FormTitle } from "../../components/styles";
 
 export const SignUpPage = () => {
 
   return (
-    <>
-      <h1>This is the Sign up page</h1>
-    </>
+    <FormWrapper>
+      <FormTitle>Sign Up</FormTitle>
+      <SignUpForm />
+    </ FormWrapper>
   )
 }
