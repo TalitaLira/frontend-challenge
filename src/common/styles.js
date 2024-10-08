@@ -36,6 +36,7 @@ export const Button = styled.button`
   border: 1px solid black;
   font-size: 16px;
   cursor: pointer;
+  margin-right: 10px;
 `;
 
 export const FormValidationMessage = styled.p`

@@ -13,9 +13,9 @@ jest.mock('react-router-dom', () => ({
   useNavigate: jest.fn(),
 }));
 
-// Mock the useSignUpForSubmition hook
-jest.mock('../../../helpers/useSignUpFormSubmition', () => ({
-  useSignUpForSubmition: () => ({
+// Mock the useSignUpForSubmission hook
+jest.mock('../../../helpers/useSignUpFormSubmission', () => ({
+  useSignUpForSubmission: () => ({
     handleSubmitSignUpForm: jest.fn(), // Mock function
   }),
 }));

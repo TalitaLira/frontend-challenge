@@ -2,20 +2,21 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { FormWrapper, FormTitle, ButtonWrapper, Button } from "../../common/styles";
 import { List, ListItem } from "./styles.js";
-import { useSignUpForSubmition } from "../../helpers/useSignUpFormSubmition";
+import { useSignUpForSubmission } from "../../helpers/useSignUpFormSubmission";
 import { useNavigate } from 'react-router-dom';
 import { Spinner } from "../../common/styles.js"
+import { replacePassForSymbols } from "../../utils/encryptPass.js"
 
 export const ConfirmationPage = () => {
-  const { value } = useSelector((state) => state.signUpForm);
-  const { name, email, password, color, terms, isFormSubmitted } = value;
-  const { handleSubmitSignUpForm } = useSignUpForSubmition();
+  const { value: signUpFormValue } = useSelector((state) => state.signUpForm);
+  const { name, email, password, color, terms, isFormSubmitted } = signUpFormValue;
+  const { handleSubmitSignUpForm } = useSignUpForSubmission();
   const navigate = useNavigate();
 
   const getTerms = terms ? 'Agreed' : 'Not Agreed';
 
   const handleOnClickSubmit = () => {
-    const formData = {name, email, password, color, terms: !!terms.length};
+    const formData = {name, email, password, color, terms};
     handleSubmitSignUpForm(formData);
   }
 
@@ -28,7 +29,7 @@ export const ConfirmationPage = () => {
           <List>
             <ListItem>First Name: {name}</ListItem>
             <ListItem>E-mail: {email}</ListItem>
-            <ListItem>Password: {password ? '****' : null}</ListItem>
+            <ListItem>Password: {replacePassForSymbols(password, '*')}</ListItem>
             <ListItem>Favorite Color: {color}</ListItem>
             <ListItem>Terms and Conditions: {getTerms}</ListItem>
           </List>

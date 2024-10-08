@@ -17,7 +17,7 @@ export const AdditionalInfoForm = () => {
   const { color: storedColor, terms: storedTerms} = value;
   const MORE_INFO_STORED_VALUES = {
   selectColor: storedColor,
-  terms: storedTerms
+  terms: storedTerms ? ["termsAgreed"] : null,
 };
 
 const isThereValuesStored = MORE_INFO_STORED_VALUES.selectColor && MORE_INFO_STORED_VALUES.terms?.length;
@@ -26,12 +26,13 @@ const isThereValuesStored = MORE_INFO_STORED_VALUES.selectColor && MORE_INFO_STO
 
   const handleClickNext = (values, setSubmitting) => {
     const { selectColor: color, terms } = values;
-    dispatch(addMoreInfo({ color, terms }))
+    const newTerms = !!terms?.length > 0;
+    dispatch(addMoreInfo({ color, terms: newTerms }))
     setSubmitting(false);
     navigate('/confirmation');
   }
 
-  if(isLoading || colorList.length == 0) {
+  if(isLoading) {
     return <Spinner size={30} />
   }
 
@@ -64,7 +65,9 @@ const isThereValuesStored = MORE_INFO_STORED_VALUES.selectColor && MORE_INFO_STO
             <Button data-testid="backButton" onClick={() => navigate(-1)}>
               Back
             </Button>
-            <Button data-testid="nextButton" type="submit" disabled={isSubmitting || values.terms.length == 0 || !isValid || (!dirty && !isValid)}>
+            {/* (!dirty && !isValid) is used for when user return from confirmation screen to more-info. 
+            Button should only disable if form isn't dirty and isValid is false */}
+            <Button data-testid="nextButton" type="submit" disabled={isSubmitting || !values.terms || !isValid || (!dirty && !isValid)}>
               Next
             </Button>
           </ButtonWrapper>

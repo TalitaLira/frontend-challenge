@@ -13,7 +13,7 @@ export const ADDITIONAL_INFO_INITIAL_VALUES = {
 export const validateSignUpForm = (values) => {
   const errors = {};
 
-  if(!values.firstName){
+  if(!values.firstName.trim()){
     errors.firstName = 'First name is required';
   }
   if (!values.email) {

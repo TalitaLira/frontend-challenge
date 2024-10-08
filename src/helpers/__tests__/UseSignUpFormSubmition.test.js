@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { useSignUpForSubmition } from '../useSignUpFormSubmition.js';
+import { useSignUpForSubmission } from '../useSignUpFormSubmission.js';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSubmitSignUpFormMutation } from '../../services/sign-up-form'
@@ -24,14 +24,14 @@ jest.mock('../../services/sign-up-form', () => ({
 
 // Test component that uses the hook
 const TestComponent = ({ formData }) => {
-  const { handleSubmitSignUpForm } = useSignUpForSubmition();
+  const { handleSubmitSignUpForm } = useSignUpForSubmission();
 
   return (
     <button onClick={() => handleSubmitSignUpForm(formData)}>Submit</button>
   );
 };
 
-describe('useSignUpForSubmition', () => {
+describe('useSignUpForSubmission', () => {
   let mockNavigate;
   let mockDispatch;
   let mockSubmitSignUpForm;

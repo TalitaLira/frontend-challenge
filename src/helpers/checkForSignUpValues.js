@@ -10,7 +10,7 @@ export const isInitialSignUpValuesFilledUp = () => {
 export const isMoreInfoFilledUp = () => {
   const state = store.getState();
   const { color, terms } = state.signUpForm.value
-  return color && terms.length > 0;
+  return color && terms;
 };
 
 export const isFormSubmitted = () => {
