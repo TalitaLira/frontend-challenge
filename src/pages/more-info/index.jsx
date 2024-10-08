@@ -1,6 +1,6 @@
 import React from "react";
 import { AdditionalInfoForm } from "../../components/additional-info-form";
-import { FormWrapper, FormTitle } from "../../components/styles";
+import { FormWrapper, FormTitle } from "../../common/styles";
 
 export const MoreInfoPage = () => {
 

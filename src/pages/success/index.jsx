@@ -1,5 +1,5 @@
 import React from "react";
-import { FormWrapper } from "../../components/styles";
+import { FormWrapper } from "../../common/styles";
 import { InformativeTemplate } from "../../components/informative-template";
 
 export const SuccessPage = () => {

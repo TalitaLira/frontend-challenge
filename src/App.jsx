@@ -1,16 +1,15 @@
-import React, { Component } from "react";
+import React from 'react';
+import { SignUpForm } from "./components/sign-up-form";
+import { FormWrapper, FormTitle } from "./common/styles";
 
 const App = () => {
-  return (
-    <div>
-      <header>
-        <h1>Welcome to Upgrade challenge</h1>
-      </header>
-      <p>
-        To get started, edit <code>src/App.jsx</code> and save to reload.
-      </p>
-    </div>
-  );
-};
+
+return (
+  <FormWrapper>
+    <FormTitle>Sign Up</FormTitle>
+    <SignUpForm />
+  </ FormWrapper>
+  )
+}
 
 export default App;

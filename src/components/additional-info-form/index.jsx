@@ -1,46 +1,67 @@
 import React from "react";
 import { Formik, Form, ErrorMessage, Field } from 'formik';
 import { ADDITIONAL_INFO_INITIAL_VALUES, validateAdditionalInfoForm } from "../../helpers/form-validation";
-import { useGoBack } from "../../utils/useGoBack";
-import { FormField, ButtonWrapper, Button, FieldsWrapper } from "../../components/styles";
+import { ButtonWrapper, Button, FormValidationMessage, Spinner } from "../../common/styles.js";
+import { FieldsWrapper, DropdownWrapper } from "./styles.js";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { addMoreInfo } from "../../store/slices/signUpSlice.js";
+import { useGetSignUpColorsQuery } from "../../services/sign-up-form.js";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export const AdditionalInfoForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { value } = useSelector((state) => state.signUpForm);
+  const { color: storedColor, terms: storedTerms} = value;
+  const MORE_INFO_STORED_VALUES = {
+  selectColor: storedColor,
+  terms: storedTerms
+};
+
+const isThereValuesStored = MORE_INFO_STORED_VALUES.selectColor && MORE_INFO_STORED_VALUES.terms?.length;
+
+  const { data: colorList = [], isLoading } = useGetSignUpColorsQuery()
 
   const handleClickNext = (values, setSubmitting) => {
-    console.log(values)
+    const { selectColor: color, terms } = values;
+    dispatch(addMoreInfo({ color, terms }))
     setSubmitting(false);
     navigate('/confirmation');
   }
 
-  const goBack = useGoBack('/');
+  if(isLoading || colorList.length == 0) {
+    return <Spinner size={30} />
+  }
 
   return (
     <Formik
-       initialValues={ADDITIONAL_INFO_INITIAL_VALUES}
+       initialValues={isThereValuesStored ? MORE_INFO_STORED_VALUES : ADDITIONAL_INFO_INITIAL_VALUES}
        validate={values => validateAdditionalInfoForm(values)}
        onSubmit={(values, { setSubmitting }) => handleClickNext(values, setSubmitting)}
      >
       {({ isSubmitting, values }) => (
         <Form>
-          <FormField as="select" name="selectColor">
-            <option value="">Select your favorite color</option>
-            <option value="red">Red</option>
-            <option value="green">Green</option>
-            <option value="blue">Blue</option>
-          </FormField>
-          <ErrorMessage name="selectColor" component="div" />
+          <DropdownWrapper>
+            <Field as="select" name="selectColor">
+              <option value="">Select your favorite color</option>
+              {colorList.length > 0 && colorList.map((color, index) => (
+                <option key={index} value={color}>{color}</option>
+              ))}
+            </Field>
+          </DropdownWrapper>
+          <ErrorMessage name="selectColor" component={FormValidationMessage} />
 
           <FieldsWrapper role="group" aria-labelledby="checkbox-group">
             <label>
               <Field type="checkbox" name="terms" value="termsAgreed" />
-              I agree to Terms and Conditions
+              I agree to  <Link>Terms and Conditions</Link>
             </label>
           </FieldsWrapper>
-          <ErrorMessage name="terms" component="div" />
+          <ErrorMessage name="terms" component={FormValidationMessage} />
           <ButtonWrapper>
-            <Button onClick={goBack}>
+            <Button onClick={() => navigate(-1)}>
               Back
             </Button>
             <Button type="submit" disabled={isSubmitting || values.terms.length == 0}>

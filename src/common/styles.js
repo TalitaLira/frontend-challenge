@@ -1,5 +1,10 @@
 import { styled } from "styled-components";
-import { Field } from 'formik';
+import { CircularProgress } from '@mui/material';
+
+export const Spinner = styled(CircularProgress)`
+  margin: 0 auto;
+  display: block !important;
+`;
 
 export const FormWrapper = styled.div`
   display: block;
@@ -9,21 +14,13 @@ export const FormWrapper = styled.div`
   width: 100%;
   padding: 10px;
   overflow: hidden;
+  box-sizing: border-box;
 `;
 
 export const FormTitle = styled.h1`
   font-size: 25px;
   text-align: center;
   margin-bottom: 30px;
-`;
-
-export const FormField = styled(Field)`
-  display: block;
-  padding: 10px 5px;
-  margin: 10px auto;
-  width: 80%;
-  overflow: hidden;
-  font-size: 14px;
 `;
 
 export const ButtonWrapper = styled.div`
@@ -38,23 +35,12 @@ export const Button = styled.button`
   background-color: #fff;
   border: 1px solid black;
   font-size: 16px;
+  cursor: pointer;
 `;
 
-export const FieldsWrapper = styled.div`
-  width: 80%;
-  margin: 20px auto;
-  position: relative;
-  > label {
-    display: flex;
-    > input {
-      margin-right: 10px;
-      width: initial;
-    }
-  }
-`;
-
-export const InformativeText = styled.p`
-  font-size: 18px;
+export const FormValidationMessage = styled.p`
+  font-size: 13px;
   text-align: center;
-  margin-bottom: 40px;
+  color: #FF0000;
+  font-weight: 200;
 `;
