@@ -6,7 +6,8 @@ import { Provider } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ConfirmationPage } from '../index.jsx';
 import configureStore from 'redux-mock-store';
-
+import { replacePassForSymbols } from '../../../utils/encryptPass.js'
+ 
 // Mocking useNavigate from React Router
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -26,7 +27,7 @@ const initialState = {
     value: {
       name: 'Talita',
       email: 'talita@example.com',
-      password: 'securepassword',
+      password: 'admin123',
       color: 'blue',
       terms: true,
       isFormSubmitted: false,
@@ -53,11 +54,12 @@ describe('ConfirmationPage', () => {
   });
 
   it('should display all information from formData on the screen', () => {
-    expect(screen.getByText('First Name: Talita')).toBeInTheDocument();
-    expect(screen.getByText('E-mail: talita@example.com')).toBeInTheDocument();
-    expect(screen.getByText('Password: ****')).toBeInTheDocument();
-    expect(screen.getByText('Favorite Color: blue')).toBeInTheDocument();
-    expect(screen.getByText('Terms and Conditions: Agreed')).toBeInTheDocument();
+    const { name, email, password, color, terms } = initialState.signUpForm.value;
+    expect(screen.getByText(`First Name: ${name}`)).toBeInTheDocument();
+    expect(screen.getByText(`E-mail: ${email}`)).toBeInTheDocument();
+    expect(screen.getByText(`Password: ${replacePassForSymbols(password, '*')}`)).toBeInTheDocument();
+    expect(screen.getByText(`Favorite Color: ${color}`)).toBeInTheDocument();
+    expect(screen.getByText(`Terms and Conditions: ${terms ? 'Agreed' : 'Not Agreed'}`)).toBeInTheDocument();
   });
 
   it('should navigate to "/more-info" when the "Back" button is clicked', async () => {
