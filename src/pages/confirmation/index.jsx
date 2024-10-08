@@ -34,7 +34,7 @@ export const ConfirmationPage = () => {
           </List>
 
           <ButtonWrapper>
-            <Button onClick={() => navigate(-1)}>
+            <Button data-testid="backButton" onClick={() => navigate(-1)}>
               Back
             </Button>
             <Button onClick={handleOnClickSubmit}>

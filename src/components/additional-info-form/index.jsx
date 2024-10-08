@@ -41,10 +41,10 @@ const isThereValuesStored = MORE_INFO_STORED_VALUES.selectColor && MORE_INFO_STO
        validate={values => validateAdditionalInfoForm(values)}
        onSubmit={(values, { setSubmitting }) => handleClickNext(values, setSubmitting)}
      >
-      {({ isSubmitting, values }) => (
+      {({ isSubmitting, values, isValid, dirty }) => (
         <Form>
           <DropdownWrapper>
-            <Field as="select" name="selectColor">
+            <Field data-testid="colorField" as="select" name="selectColor">
               <option value="">Select your favorite color</option>
               {colorList.length > 0 && colorList.map((color, index) => (
                 <option key={index} value={color}>{color}</option>
@@ -55,16 +55,16 @@ const isThereValuesStored = MORE_INFO_STORED_VALUES.selectColor && MORE_INFO_STO
 
           <FieldsWrapper role="group" aria-labelledby="checkbox-group">
             <label>
-              <Field type="checkbox" name="terms" value="termsAgreed" />
+              <Field data-testid="TermsCheckbox" type="checkbox" name="terms" value="termsAgreed" />
               I agree to  <Link>Terms and Conditions</Link>
             </label>
           </FieldsWrapper>
           <ErrorMessage name="terms" component={FormValidationMessage} />
           <ButtonWrapper>
-            <Button onClick={() => navigate(-1)}>
+            <Button data-testid="backButton" onClick={() => navigate(-1)}>
               Back
             </Button>
-            <Button type="submit" disabled={isSubmitting || values.terms.length == 0}>
+            <Button data-testid="nextButton" type="submit" disabled={isSubmitting || values.terms.length == 0 || !isValid || (!dirty && !isValid)}>
               Next
             </Button>
           </ButtonWrapper>

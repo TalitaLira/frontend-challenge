@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Formik, Form, ErrorMessage } from 'formik';
 import { SIGN_UP_INITIAL_VALUES, validateSignUpForm } from "../../helpers/form-validation";
 import { ButtonWrapper, Button, FormValidationMessage } from "../../common/styles";
@@ -36,16 +36,16 @@ const isThereValuesStored = SIGN_UP_STORED_VALUES.firstName && SIGN_UP_STORED_VA
        validate={values => validateSignUpForm(values)}
        onSubmit={(values, { setSubmitting }) => handleClickNext(values, setSubmitting)}
      >
-       {({ isSubmitting }) => (
+       {({ isSubmitting, isValid, dirty }) => (
          <Form>
-          <FormField type="text" name="firstName" placeholder="First Name"/>
+          <FormField data-testid="firstNameField" type="text" name="firstName" placeholder="First Name"/>
            <ErrorMessage name="firstName" component={FormValidationMessage} />
-           <FormField type="email" name="email"  placeholder="E-mail"/>
-           <ErrorMessage name="email" component={FormValidationMessage} />
-           <FormField type="password" name="password"  placeholder="Password"/>
+           <FormField  data-testid="emailField" type="email" name="email"  placeholder="E-mail"/>
+           <ErrorMessage data-testid="emailError" name="email" component={FormValidationMessage} />
+           <FormField  data-testid="passwordField" type="password" name="password"  placeholder="Password"/>
            <ErrorMessage name="password" component={FormValidationMessage} />
            <ButtonWrapper>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button data-testid="nextButton" type="submit" disabled={isSubmitting || !isValid || !dirty}>
               Next
             </Button>
           </ButtonWrapper>
